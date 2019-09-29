@@ -1,18 +1,56 @@
 ---
-title: "R Notebook"
+title: "Tidyverse"
 output: html_notebook
 ---
 
-This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+#5.2 Exercises
+1. Examine the built-in dataset co2. Which of the following is true:
 
-Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
-
+A. co2 is tidy data: it has one year for each row.
+B. co2 is not tidy: we need at least one column with a character vector.
+C. co2 is not tidy: it is a matrix instead of a data frame.
+D. co2 is not tidy: to be tidy we would have to wrangle it to have three columns (year, month and value), then each co2 observation would have a row.
 ```{r}
-plot(cars)
+library(tidyverse)
+```
+```{r}
+data(co2)
+head(co2)
+```
+A> C
+
+2. Examine the built-in dataset ChickWeight. Which of the following is true:
+
+A. ChickWeight is not tidy: each chick has more than one row.
+
+B. ChickWeight is tidy: each observation (a weight) is represented by one row. The chick from which this measurement came from is one the variables.
+
+C. ChickWeight is not a tidy: we are missing the year column.
+
+D. ChickWeight is tidy: it is stored in a data frame.
+```{r}
+head(ChickWeight)
+```
+A> B
+
+#. 5.4 Exercise
+1. 
+```{r}
+library(dplyr)
+library(dslabs)
+data(murders)
+murders <- mutate(murders, population_in_millions = population / 10^6)
+head(murders)
+```
+```{r}
+murders <- mutate(murders, rate = total / population * 100000)
+head(murders)
 ```
 
-Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+2. If rank(x) gives you the ranks of x from lowest to highest, rank(-x) gives you the ranks from highest to lowest. Use the function mutate to add a column rank containing the rank, from highest to lowest murder rate. Make sure you redefine murders so we can keep using this variable.
+```{r}
+murders <- mutate(murders, rank = rank(-murders$rate))
+head(murders)
+```
 
-When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
-
-The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+3. With dplyr, we can use select to show only certain columns. For example, with this code we would only show the states and population sizes:
