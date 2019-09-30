@@ -1,0 +1,18 @@
+---
+title: "TCGA"
+output: html_notebook
+---
+```{r}
+library(ggplot2, quietly = T)
+library(tidyverse, quietly = T)
+library(readr, quietly = T)
+```
+
+```{r}
+colnames(d_luad)
+```
+
+```{r}
+colnames(d_lusc)
+```
+
